@@ -67,6 +67,7 @@ public class CKConfig {
 	private boolean tableResize;
 	private boolean shouldEnterSave = false;
 	private String skin;
+	private JavaScriptObject toolbarGroups;
 
 	JavaScriptObject config = JavaScriptObject.createObject();
 
@@ -74,7 +75,7 @@ public class CKConfig {
 	 * Defines existing toolbar configuration in CKEDITOR environment
 	 */
 	public enum PRESET_TOOLBAR {
-		BASIC, FULL
+		BASIC, FULL , STANDARD
 	}
 
 	/**
@@ -208,6 +209,8 @@ public class CKConfig {
 			toolbarName = "Basic";
 		} else if (toolbar == PRESET_TOOLBAR.FULL) {
 			toolbarName = "Full";
+		}else if (toolbar == PRESET_TOOLBAR.STANDARD) {
+			toolbarName = "Standard";
 		}
 	}
 
@@ -500,12 +503,21 @@ public class CKConfig {
 	 * 
 	 * @return a CKEDITOR.config object
 	 */
-	public JavaScriptObject getConfigObject() {
-		if (toolbarName != null) {
-			setToolbarNameObject(toolbarName);
-		} else {
-			setToolbarObject(toolbar.getRepresentation());
+	public JavaScriptObject getConfigObject(boolean isText) {
+		if(isText) {
+			enableSpellChecker();
+			stripToolbar();
+		}else {
+			if (toolbarName != null) {
+				setToolbarNameObject(toolbarName);
+			} else {
+				
+				System.out.println(toolbar.getRepresentation());
+				setToolbarObject(toolbar.getRepresentation());
+			}
+			enableSpellChecker();
 		}
+		
 		return config;
 	}
 	
@@ -536,7 +548,16 @@ public class CKConfig {
 	private native void setNativeUiColor(String uiColor) /*-{
 		this.@com.axeiya.gwtckeditor.client.CKConfig::config.uiColor = uiColor;
 	}-*/;
-
+	
+	private native void enableSpellChecker() /*-{
+	  this.@com.axeiya.gwtckeditor.client.CKConfig::config.scayt_autoStartup = true
+	                         
+	}-*/;
+	private native void stripToolbar()
+	/*-{
+	 this.@com.axeiya.gwtckeditor.client.CKConfig::config.toolbarGroups= [];
+	                         
+	                         }-*/;
 	private native void setNativeHeight(String height) /*-{
 		this.@com.axeiya.gwtckeditor.client.CKConfig::config.height = height;
 	}-*/;
@@ -586,8 +607,13 @@ public class CKConfig {
 	}-*/;
 
 	private native void setToolbarObject(JavaScriptObject toolbarArray) /*-{
-		this.@com.axeiya.gwtckeditor.client.CKConfig::config.toolbar_temp = toolbarArray;
-		this.@com.axeiya.gwtckeditor.client.CKConfig::config.toolbar = 'temp';
+//		this.@com.axeiya.gwtckeditor.client.CKConfig::config.toolbar_temp = toolbarArray;
+		this.@com.axeiya.gwtckeditor.client.CKConfig::config.toolbar = [
+    [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ],
+    [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
+    '/',
+    [ 'Bold', 'Italic' ]
+];
 	}-*/;
 
 	private native void setNativeTableResize(boolean tableResize) /*-{

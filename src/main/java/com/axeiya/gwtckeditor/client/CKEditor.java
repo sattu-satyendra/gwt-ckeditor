@@ -111,6 +111,7 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 	protected HorizontalAlignmentConstant hAlign = null;
 
 	protected VerticalAlignmentConstant vAlign = null;
+	private boolean isText;
 
 	/**
 	 * Creates an editor with the CKConfig.basic configuration. By default, the
@@ -118,7 +119,7 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 	 * a simple TextArea
 	 */
 	public CKEditor() {
-		this(CKConfig.basic);
+		this(CKConfig.basic,false);
 	}
 
 	/**
@@ -129,9 +130,10 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 	 * @param config
 	 *            The configuration
 	 */
-	public CKEditor(CKConfig config) {
+	public CKEditor(CKConfig config,boolean istext) {
 		super();
 		this.config = config;
+		this.isText=istext;
 		initCKEditor();
 	}
 	
@@ -244,6 +246,15 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 	public String getText() {
 		return getNativeHTML();
 	}
+	
+	
+	public native String getPlainText() /*-{
+		var e = this.@com.axeiya.gwtckeditor.client.CKEditor::editor;
+		if(e==null){
+			return "";
+		}
+		return e.editable().getText() ;
+	}-*/;
 
 	@Override
 	public VerticalAlignmentConstant getVerticalAlignment() {
@@ -283,9 +294,10 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 	 * Replace the text Area by a CKEditor Instance
 	 */
 	protected void initInstance() {
+		
 		if (!replaced && !disabled) {
 			replaced = true;
-			replaceTextArea(baseTextArea, this.config.getConfigObject());
+			replaceTextArea(baseTextArea, this.config.getConfigObject(isText));
 
 			if (textWaitingForAttachment) {
 				textWaitingForAttachment = false;
@@ -344,9 +356,15 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 
 	@Override
 	protected void onLoad() {
+		System.out.println(replaced + " "+disabled);
 		initInstance();
 	}
 
+	@Override
+	protected void onUnload() {
+		
+	}
+	
 	private native void replaceTextArea(Object o, JavaScriptObject config) /*-{
 		this.@com.axeiya.gwtckeditor.client.CKEditor::editor = $wnd.CKEDITOR
 				.replace(o, config);
