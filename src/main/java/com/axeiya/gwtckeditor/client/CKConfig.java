@@ -311,6 +311,18 @@ public class CKConfig {
 		this.language = language;
 		setNativeLanguage(language);
 	}
+	
+	/**
+	 * The user spell checker language localization to use. If empty, the editor
+	 * automatically localize the editor to the user language, if supported,
+	 * otherwise the CKEDITOR.config.scayt_sLang language is used.
+	 * 
+	 * @param language
+	 */
+	public void setSpellCheckerLanguage(String language) {
+		this.language = language;
+		setNativeSpellCheckerLanguage(language);
+	}
 
 	/**
 	 * Define if the editor can be resized or not
@@ -572,6 +584,11 @@ public class CKConfig {
 
 	private native void setNativeLanguage(String language) /*-{
 		this.@com.axeiya.gwtckeditor.client.CKConfig::config.language = language;
+	}-*/;
+	
+	private native void setNativeSpellCheckerLanguage(String language) /*-{
+	this.@com.axeiya.gwtckeditor.client.CKConfig::config.scayt_disableOptionsStorage = 'all';
+	this.@com.axeiya.gwtckeditor.client.CKConfig::config.scayt_sLang= language;
 	}-*/;
 
 	private native void setNativeResizeEnabled(boolean resizeEnabled) /*-{
