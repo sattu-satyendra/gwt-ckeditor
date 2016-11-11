@@ -196,7 +196,8 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 	private native void destroyInstance()/*-{
 		var editor = this.@com.axeiya.gwtckeditor.client.CKEditor::editor;
 		if (editor) {
-			editor.destroy();
+			editor.removeAllListeners();
+			$wnd.CKEDITOR.remove(editor);
 		}
 	}-*/;
 
