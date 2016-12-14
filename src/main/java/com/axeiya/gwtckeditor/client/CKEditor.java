@@ -200,7 +200,7 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 			$wnd.CKEDITOR.remove(editor);
 		}
 	}-*/;
-
+	
 	/**
 	 * {@link #getHTML()}
 	 * 
@@ -209,7 +209,9 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 	public String getData() {
 		return getHTML();
 	}
-
+	
+	
+	
 	@Override
 	public HorizontalAlignmentConstant getHorizontalAlignment() {
 		return hAlign;
@@ -256,7 +258,25 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 		}
 		return e.editable().getText() ;
 	}-*/;
-
+	
+	public native String clickBoldAction() /*-{
+	var e = this.@com.axeiya.gwtckeditor.client.CKEditor::editor;
+		return e.execCommand('bold');
+		
+	}-*/;
+	
+	public native String clickItalicAction() /*-{
+	var e = this.@com.axeiya.gwtckeditor.client.CKEditor::editor;
+		return e.execCommand('italic');
+		
+	}-*/;
+	
+	public native String clickUnderlineAction() /*-{
+	var e = this.@com.axeiya.gwtckeditor.client.CKEditor::editor;
+		return e.execCommand('underline');
+		
+	}-*/;
+	
 	@Override
 	public VerticalAlignmentConstant getVerticalAlignment() {
 		return vAlign;
