@@ -104,6 +104,8 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 	protected Element div;
 	protected Node ckEditorNode;
 	protected HTML disabledHTML;
+	protected String backgrdColor;
+	protected String fontFamily;
 
 	protected AutoSaveTimer autoSaveTimer = new AutoSaveTimer(this);
 
@@ -119,7 +121,7 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 	 * a simple TextArea
 	 */
 	public CKEditor() {
-		this(CKConfig.basic,false);
+		this(CKConfig.basic,false, "#fff", "sans-serif, Arial, Verdana, \"Trebuchet MS\"");
 	}
 
 	/**
@@ -130,10 +132,12 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 	 * @param config
 	 *            The configuration
 	 */
-	public CKEditor(CKConfig config,boolean istext) {
+	public CKEditor(CKConfig config,boolean istext, String bgColor, String fontFamily) {
 		super();
 		this.config = config;
 		this.isText=istext;
+		this.backgrdColor=bgColor;
+		this.fontFamily = fontFamily;
 		initCKEditor();
 	}
 	
@@ -153,10 +157,16 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 		return addHandler(handler, InstanceReadyEvent.TYPE);
 	}
 	
-	private native void bindInstanceReadyEvent() /*-{
+	private native void bindInstanceReadyEvent(String bgColor, String fontFamily) /*-{
 		var selfJ = this;
 		var editor = this.@com.axeiya.gwtckeditor.client.CKEditor::editor;
-		editor.on('instanceReady', function() {
+		editor.on('instanceReady', function(e) {
+			  e.editor.document.getBody().setStyle('background-color', bgColor);
+			  e.editor.document.getBody().setStyle('font-family', fontFamily);
+    			e.editor.on('contentDom', function() {
+        	e.editor.document.getBody().setStyle('background-color', bgColor);
+        	e.editor.document.getBody().setStyle('font-family', fontFamily);
+    		});
 			@com.axeiya.gwtckeditor.client.event.InstanceReadyEvent::fire(Lcom/axeiya/gwtckeditor/client/event/HasInstanceReadyHandlers;Lcom/axeiya/gwtckeditor/client/CKEditor;)(selfJ, selfJ);
 		});
 	}-*/;
@@ -200,7 +210,7 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 			$wnd.CKEDITOR.remove(editor);
 		}
 	}-*/;
-
+	
 	/**
 	 * {@link #getHTML()}
 	 * 
@@ -209,7 +219,9 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 	public String getData() {
 		return getHTML();
 	}
-
+	
+	
+	
 	@Override
 	public HorizontalAlignmentConstant getHorizontalAlignment() {
 		return hAlign;
@@ -256,7 +268,8 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 		}
 		return e.editable().getText() ;
 	}-*/;
-
+	
+	
 	@Override
 	public VerticalAlignmentConstant getVerticalAlignment() {
 		return vAlign;
@@ -323,7 +336,7 @@ public class CKEditor extends Composite implements HasSaveHandlers<CKEditor>, Ha
 				setEnabled(this.disabled);
 			}
 
-			bindInstanceReadyEvent();
+			bindInstanceReadyEvent(backgrdColor,fontFamily);
 			bindChangeEvent();
 			/*
 			 * if (config.getBreakLineChars() != null) {
