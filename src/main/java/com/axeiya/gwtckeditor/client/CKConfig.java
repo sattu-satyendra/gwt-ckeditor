@@ -515,21 +515,24 @@ public class CKConfig {
 	 * 
 	 * @return a CKEDITOR.config object
 	 */
-	public JavaScriptObject getConfigObject(boolean isText) {
+	public JavaScriptObject getConfigObject(boolean isText, boolean getSpellChecker) {
 		if(isText) {
-			enableSpellChecker();
+			if(getSpellChecker) {
+				enableSpellChecker();
+			}
 			stripToolbar();
 		}else {
 			if (toolbarName != null) {
 				setToolbarNameObject(toolbarName);
 			} else {
-				
+
 				System.out.println(toolbar.getRepresentation());
 				setToolbarObject(toolbar.getRepresentation());
 			}
-			enableSpellChecker();
+			if(getSpellChecker) {
+				enableSpellChecker();
+			}
 		}
-		
 		return config;
 	}
 	
