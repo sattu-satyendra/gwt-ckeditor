@@ -516,7 +516,7 @@ public class CKConfig {
 	 * @return a CKEDITOR.config object
 	 */
 	public JavaScriptObject getConfigObject(boolean isText, boolean getSpellChecker) {
-		if(isText) {
+		/*if(isText) {
 			if(getSpellChecker) {
 				enableSpellChecker();
 			}
@@ -532,6 +532,16 @@ public class CKConfig {
 			if(getSpellChecker) {
 				enableSpellChecker();
 			}
+		} */
+		if (toolbarName != null) {
+			setToolbarNameObject(toolbarName);
+		} else {
+
+			System.out.println(toolbar.getRepresentation());
+			setToolbarObject(toolbar.getRepresentation());
+		}
+		if(getSpellChecker) {
+			enableSpellChecker();
 		}
 		return config;
 	}
@@ -629,10 +639,8 @@ public class CKConfig {
 	private native void setToolbarObject(JavaScriptObject toolbarArray) /*-{
 //		this.@com.axeiya.gwtckeditor.client.CKConfig::config.toolbar_temp = toolbarArray;
 		this.@com.axeiya.gwtckeditor.client.CKConfig::config.toolbar = [
-    [ 'Source', '-', 'NewPage', 'Preview', '-', 'Templates' ],
-    [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
-    '/',
-    [ 'Bold', 'Italic' ]
+    [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
+    ['EmojiPanel']
 ];
 	}-*/;
 
