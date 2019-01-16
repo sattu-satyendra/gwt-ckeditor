@@ -639,7 +639,7 @@ public class CKConfig {
 	private native void setToolbarObject(JavaScriptObject toolbarArray) /*-{
 //		this.@com.axeiya.gwtckeditor.client.CKConfig::config.toolbar_temp = toolbarArray;
 		this.@com.axeiya.gwtckeditor.client.CKConfig::config.toolbar = [
-    [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo'],
+    ['Undo', 'Redo'],
     ['EmojiPanel']
 ];
 	}-*/;
