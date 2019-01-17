@@ -546,6 +546,14 @@ public class CKConfig {
 		return config;
 	}
 	
+	public void removeEmojiPluginFromEditor() {
+		removeEmojiPlugin();
+	}
+	
+	private native void removeEmojiPlugin()/*-{
+		this.@com.axeiya.gwtckeditor.client.CKConfig::config.removePlugins = 'emoji';
+	}-*/;
+	
 	private native void setNativeReadOnly(boolean readOnly)/*-{
 		this.@com.axeiya.gwtckeditor.client.CKConfig::config.readOnly = readOnly;
 	}-*/;
