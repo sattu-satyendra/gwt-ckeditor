@@ -83,7 +83,12 @@ public class CKConfig {
 	 * Defines existing toolbar options ; use _ as "-" separator
 	 */
 	public enum TOOLBAR_OPTIONS {
-		EmojiPanel,Source, Save, NewPage, Preview, Templates, Cut, Copy, Paste, PasteText, PasteFromWord, Print, SpellChecker, Scayt, Undo, Redo, Find, Replace, SelectAll, RemoveFormat, Form, Checkbox, Radio, TextField, Textarea, Select, Button, ImageButton, HiddenField, Bold, Italic, Underline, Strike, Subscript, Superscript, NumberedList, BulletedList, Outdent, Indent, Blockquote, JustifyLeft, JustifyCenter, JustifyRight, JustifyBlock, Link, Unlink, Anchor, Image, Flash, Table, HorizontalRule, Smiley, SpecialChar, PageBreak, Styles, Format, Font, FontSize, TextColor, BGColor, Maximize, ShowBlocks, About, _
+		EmojiPanel, Source, Save, NewPage, Preview, Templates, Cut, Copy, Paste, PasteText, PasteFromWord, Print,
+		SpellChecker, Scayt, Undo, Redo, Find, Replace, SelectAll, RemoveFormat, Form, Checkbox, Radio, TextField, Textarea,
+		Select, Button, ImageButton, HiddenField, Bold, Italic, Underline, Strike, Subscript, Superscript, NumberedList,
+		BulletedList, Outdent, Indent, Blockquote, JustifyLeft, JustifyCenter, JustifyRight, JustifyBlock, Link, Unlink,
+		Anchor, Image, Flash, Table, HorizontalRule, Smiley, SpecialChar, PageBreak, Styles, Format, Font, FontSize,
+		TextColor, BGColor, Maximize, ShowBlocks, About, ToolbarSeparator
 	}
 
 	public enum AVAILABLE_PLUGINS {
